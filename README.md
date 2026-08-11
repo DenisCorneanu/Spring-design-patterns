@@ -69,5 +69,9 @@ Requirements:
 
 On Windows:
 
-```bash
 gradlew.bat bootRun
+
+
+On Linux/macOS:
+
+./gradlew bootRun
