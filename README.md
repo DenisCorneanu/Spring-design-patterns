@@ -1,55 +1,73 @@
-# spring-design-patterns
+# Spring Design Patterns
 
-Spring Boot REST API built around a books management domain, used as a playground for implementing classic design patterns. Each feature of the app demonstrates one or more patterns in a practical context rather than just as isolated examples.
+A simple Spring Boot project where I implemented several design patterns in a small book management API.
 
-Built as part of the Software Patterns Lab at Facultatea de Informatica, UVT Timisoara.
+The goal of the project was to understand how common design patterns can be used in a real application instead of only learning them theoretically.
 
----
+## Design Patterns Used
 
-## Patterns implemented
+### Command
 
-**Command** — each CRUD operation is wrapped in a command object (`CreateBookCommand`, `GetAllBooksCommand`, etc.) implementing a generic `Command<R>` interface. The controller constructs and executes commands rather than calling the service directly.
+Book operations such as create, update, delete and get are handled through command classes.
 
-**Observer + Server-Sent Events** — `AllBooksSubject` maintains a list of `BooksObserver` instances. When a new book is created, all attached observers are notified. `BooksSseController` wires this to an SSE endpoint (`/books-sse`) so clients receive real-time push updates without polling.
+Examples:
+- `CreateBookCommand`
+- `GetAllBooksCommand`
 
-**Strategy** — text alignment in the book rendering layer is handled via `AlignStrategy` with three implementations: `AlignLeft`, `AlignCenter`, `AlignRight`. The strategy is injected into `Paragraph` at runtime.
+### Observer
 
-**Composite** — the book document model uses a composite tree: `Element` (interface) → `BaseElement` → `Section` and `Book`, with `Paragraph`, `Image`, and `Table` as leaf nodes. A `Section` can contain any `Element`, and `Book` extends `Section`.
+The project uses the Observer pattern to notify connected clients when a new book is added.
 
-**DI scopes** — `SingletonComponent` and `TransientComponent` demonstrate the difference between Spring's singleton and prototype bean scopes, injected into `ClientComponent` via constructor injection.
+The notifications are sent through Server-Sent Events using the `/books-sse` endpoint.
 
----
+### Strategy
 
-## Stack
+Paragraph alignment is handled using different strategies:
 
-- Java 21, Spring Boot 3.3.5
-- Spring Data JPA + H2 (file-based, persists between restarts)
+- `AlignLeft`
+- `AlignCenter`
+- `AlignRight`
+
+The alignment strategy can be changed at runtime.
+
+### Composite
+
+Books and sections are represented using a tree-like structure.
+
+Elements such as paragraphs, images and tables can be added inside sections.
+
+### Dependency Injection
+
+The project also contains examples of Spring bean scopes using singleton and prototype components.
+
+## Tech Stack
+
+- Java 21
+- Spring Boot
+- Spring Data JPA
+- H2 Database
 - Lombok
 - Gradle
+- Server-Sent Events
 
----
+## API Endpoints
 
-## Endpoints
-
-| Method | Path | Description |
-|--------|------|-------------|
+| Method | Endpoint | Description |
+|---|---|---|
 | GET | `/books` | Get all books |
-| GET | `/books/{id}` | Get book by ID |
+| GET | `/books/{id}` | Get one book |
 | POST | `/books` | Create a book |
 | PUT | `/books/{id}` | Update a book |
 | DELETE | `/books/{id}` | Delete a book |
-| GET | `/books-sse` | SSE stream — pushed on every new book |
+| GET | `/books-sse` | Receive book creation events |
 
-H2 console available at `http://localhost:8080/h2-console` (datasource: `jdbc:h2:file:~/h2db/booksdb`).
+## Run the Project
 
----
+Requirements:
 
-## Running locally
+- Java 21
 
-Requirements: Java 21, Gradle (or use the wrapper)
+On Windows:
 
 ```bash
-./gradlew bootRun
-```
-
-The app starts on `http://localhost:8080`.
+gradlew.bat bootRun
