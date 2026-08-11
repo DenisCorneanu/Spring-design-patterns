@@ -89,4 +89,4 @@ The H2 console is available at:
 
 ## About
 
-This project was originally developed for a Software Patterns university laboratory and focuses on practical examples of several design patterns using Spring Boot.
+I created this project because I wanted to learn how design patterns are used in real applications and get closer to the way software is structured in professional projects.
