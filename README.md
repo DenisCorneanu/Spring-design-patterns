@@ -69,9 +69,24 @@ Requirements:
 
 On Windows:
 
+```bash
 gradlew.bat bootRun
-
+```
 
 On Linux/macOS:
 
+```bash
 ./gradlew bootRun
+```
+
+The application runs on:
+
+`http://localhost:8080`
+
+The H2 console is available at:
+
+`http://localhost:8080/h2-console`
+
+## About
+
+This project was originally developed for a Software Patterns university laboratory and focuses on practical examples of several design patterns using Spring Boot.
